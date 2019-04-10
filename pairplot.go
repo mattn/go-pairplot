@@ -129,8 +129,13 @@ func (pp *PairPlot) Plot(c draw.Canvas, p *plot.Plot) {
 					continue
 				}
 				divider := []float64{}
-				for i := min; i <= max+1; i += (max - min) / 10.0 {
+				i := min
+				for {
 					divider = append(divider, float64(i))
+					if i > max {
+						break
+					}
+					i += (max - min) / 10.0
 				}
 				var prev *plotter.BarChart
 				for ci, val := range vals {
