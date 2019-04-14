@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"encoding/csv"
 	"image/png"
+	"log"
 	"os"
 	"sort"
 	"strconv"
@@ -81,6 +82,28 @@ func (pp *PairPlot) categories() ([]string, int) {
 		names = []string{""}
 	}
 	return names, attr
+}
+
+func PairPlotCSV(filename string) []byte {
+	p, err := plot.New()
+	if err != nil {
+		log.Fatal(err)
+	}
+	pp, err := NewPairPlot("iris.csv")
+	if err != nil {
+		log.Fatal(err)
+	}
+	pp.Hue = "Name"
+	p.HideAxes()
+	p.Add(pp)
+	w, err := p.WriterTo(4*vg.Inch, 4*vg.Inch, "png")
+	if err != nil {
+		log.Fatal(err)
+	}
+	var b bytes.Buffer
+	writer := bufio.NewWriter(&b)
+	w.WriteTo(writer)
+	return b.Bytes()
 }
 
 func (pp *PairPlot) bars(c draw.Canvas, p *plot.Plot, i1, i2 int, names []string, attr int) bool {
