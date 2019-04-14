@@ -89,7 +89,7 @@ func PairPlotCSV(filename string) []byte {
 	if err != nil {
 		log.Fatal(err)
 	}
-	pp, err := NewPairPlot("iris.csv")
+	pp, err := NewPairPlot(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
