@@ -13,11 +13,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	pp, err := pairplot.NewPairPlot("iris.csv")
+	pp, err := pairplot.NewPairPlotCSV("iris.csv")
 	if err != nil {
 		log.Fatal(err)
 	}
-	pp.Hue = "Name"
+	pp.SetHue("Name")
 	p.HideAxes()
 	p.Add(pp)
 	p.Save(8*vg.Inch, 8*vg.Inch, "example.png")
