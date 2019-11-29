@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"image/png"
+	"math"
 	"sort"
 
 	"github.com/go-gota/gota/dataframe"
@@ -37,6 +38,9 @@ func (pp *dfPairPlot) bars(c draw.Canvas, p *plot.Plot, i1, i2 int) bool {
 
 	s1 := pp.df.Col(names[i1])
 	s3 := pp.df.Col(pp.hue)
+	if pp.hue == "" {
+		s3 = pp.df.Col(names[0])
+	}
 	f1 := s1.Float()
 
 	for n := int(s3.Min()); n <= int(s3.Max()); n++ {
@@ -65,6 +69,9 @@ func (pp *dfPairPlot) bars(c draw.Canvas, p *plot.Plot, i1, i2 int) bool {
 		vals = append(vals, values)
 	}
 	if len(vals) == 0 {
+		return false
+	}
+	if math.IsNaN(min) || math.IsNaN(max) {
 		return false
 	}
 	divider := []float64{}
@@ -119,6 +126,9 @@ func (pp *dfPairPlot) scatter(c draw.Canvas, p *plot.Plot, i1, i2 int) bool {
 	s1 := pp.df.Col(names[i1])
 	s2 := pp.df.Col(names[i2])
 	s3 := pp.df.Col(pp.hue)
+	if pp.hue == "" {
+		s3 = pp.df.Col(names[0])
+	}
 	f1 := s1.Float()
 	f2 := s2.Float()
 	f3 := s3.Float()
