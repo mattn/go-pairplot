@@ -89,7 +89,7 @@ func (pp *dfPairPlot) bars(c draw.Canvas, p *plot.Plot, i1, i2 int) bool {
 	} else {
 		p.Y.Label.Text = " "
 	}
-	p.Y.Label.Font.Size = fontSize
+	p.Y.Label.TextStyle.Font.Size = fontSize
 	p.Legend.Top = true
 
 	var prev *plotter.BarChart
@@ -119,7 +119,7 @@ func (pp *dfPairPlot) scatter(c draw.Canvas, p *plot.Plot, i1, i2 int) bool {
 	} else {
 		p.Y.Label.Text = " "
 	}
-	p.Y.Label.Font.Size = fontSize
+	p.Y.Label.TextStyle.Font.Size = fontSize
 
 	names := pp.df.Names()
 
@@ -158,11 +158,7 @@ func (pp *dfPairPlot) scatter(c draw.Canvas, p *plot.Plot, i1, i2 int) bool {
 }
 
 func (pp *dfPairPlot) plot(c draw.Canvas, p *plot.Plot, i1, i2 int) {
-	p, err := plot.New()
-	if err != nil {
-		return
-	}
-
+	p = plot.New()
 	p.Add(plotter.NewGrid())
 
 	var drawn bool
